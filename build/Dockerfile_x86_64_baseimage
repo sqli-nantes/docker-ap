@@ -12,10 +12,13 @@ CMD ["/sbin/my_init"]
 # Update the repos
 RUN apt-get update
 
-RUN apt-get install -y hostapd dnsmasq  iptables ssh curl
+RUN apt-get install -y hostapd dnsmasq  iptables ssh curl ntp
 RUN echo "#!/bin/bash\n### START dnsmasq\nservice dnsmasq start > /dev/null 2>&1\n### START hostapd\nservice hostapd start > /dev/null 2>&1" > /usr/bin/start_ap
 RUN echo "RUN_DAEMON=\"yes\"\nDAEMON_CONF=\"/etc/hostapd/hostapd.conf\"" >> /etc/default/hostapd
 RUN chmod u+x /usr/bin/start_ap
+RUN echo "server 172.17.0.3" >> /etc/ntp.conf
+RUN mv /usr/sbin/ntpd /sbin/ntpd
+RUN /sbin/ntpd
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
