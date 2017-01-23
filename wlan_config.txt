@@ -1,5 +1,5 @@
 # Here goes your custom configuration
-SSID="DockerAP"
-PASSPHRASE="dockerap123"
+SSID="Blockchain-WIFI"
+PASSPHRASE="Agence@SQLI"
 HW_MODE=g
 CHANNEL=1
